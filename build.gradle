@@ -1,14 +1,26 @@
-group 'pl.nith.wikia.testassigment.homework'
+group 'pl.nith.wikia.testassignment.homework'
 version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile(
+            ['org.seleniumhq.selenium:selenium-java:2.47.1'],
+            ['org.seleniumhq.selenium:selenium-support:2.47.1'],
+            ['org.seleniumhq.selenium:selenium-firefox-driver:2.47.1'],
+            ['org.seleniumhq.selenium:selenium-chrome-driver:2.47.1'],
+            ['org.apache.logging.log4j:log4j-core:2.3']
+    )
+    testCompile(
+            ['org.testng:testng:6.9.6']
+    )
 }
