@@ -1,9 +1,10 @@
+package pl.nith.wikia.testassignment.homework.tests;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pl.nith.wikia.testassignment.homework.pages.WikiaHomeworkPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +16,7 @@ public class LoginToHomeworkPageTest {
     private WikiaHomeworkPage wikiPage;
 
     @Parameters("baseUrl")
-    @BeforeTest
+    @BeforeClass
     public void initDriver(String baseUrl) throws Exception {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -23,8 +24,8 @@ public class LoginToHomeworkPageTest {
         wikiPage = new WikiaHomeworkPage(driver);
     }
 
-    @AfterSuite
-    public void tearDown() throws Exception {
+    @AfterClass
+    public void uninitDriver() throws Exception {
         driver.quit();
     }
 
@@ -49,7 +50,7 @@ public class LoginToHomeworkPageTest {
     }
 
     @Parameters({"username", "password"})
-    @Test(groups = {"login"})
+    @Test(groups = {"login"}, dependsOnMethods = {"testVisibilityOfDropdownLogin"})
     public void testUserLoggedIn(String username, String password) {
         // Fill in the form with login credentials, submit them and check if the user is logged in
         wikiPage.fillInLoginData(username, password)

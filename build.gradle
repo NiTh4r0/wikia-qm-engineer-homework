@@ -5,8 +5,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -27,6 +27,8 @@ dependencies {
 
 test {
     useTestNG() {
-        suites 'src/test/resources/login_to_homework_page_suite.xml'
+        suites 'src/test/resources/wikia_homework_page_test_suite.xml'
     }
+
+    systemProperty 'webdriver.chrome.driver', System.getenv("webdriver.chrome.driver")
 }
