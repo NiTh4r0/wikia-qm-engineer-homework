@@ -19,7 +19,7 @@
         <classes>
             <class name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest">
                 <methods>
-                    <include name="" />
+                    <include name="testUserLoggedIn" />
                 </methods>
             </class>
         </classes>

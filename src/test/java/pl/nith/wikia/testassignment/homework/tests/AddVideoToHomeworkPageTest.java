@@ -15,8 +15,8 @@ public class AddVideoToHomeworkPageTest {
     private WebDriver driver;
     private WikiaHomeworkPage wikiPage;
 
-    @Parameters("baseUrl")
     @BeforeClass
+    @Parameters("baseUrl")
     public void initDriver(String baseUrl) throws Exception {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -24,15 +24,22 @@ public class AddVideoToHomeworkPageTest {
         wikiPage = new WikiaHomeworkPage(driver);
     }
 
+    @BeforeClass(dependsOnMethods = {"initDriver"})
+    @Parameters({"username", "password"})
+    public void login(String username, String password) {
+        wikiPage.moveMouseToLoginDropdown()
+                .fillInLoginData(username, password)
+                .submitLoginData();
+    }
+
     @AfterClass
     public void uninitDriver() throws Exception {
         driver.quit();
     }
 
-    @Test(groups = {"login"})
-    @Parameters({"baseUrl"})
-    public void testCorrectPage(String baseUrl) {
-        // Check if the current page is the right one
-        Assert.assertEquals(wikiPage.getCurrentUrl(), baseUrl);
+    @Test(groups = {"addVideo"})
+    public void testUserLoggedIn() {
+        // Check if the user is logged on
+        Assert.assertEquals(wikiPage.getSignInLableAttribute("data-id"), "userpage");
     }
 }
