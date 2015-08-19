@@ -2,8 +2,14 @@ package pl.nith.wikia.testassignment.homework.tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
+import static org.testng.Assert.*;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
+import pl.nith.wikia.testassignment.homework.helpers.WebElementHelper;
+import pl.nith.wikia.testassignment.homework.pages.WikiaAddVideoPage;
+import pl.nith.wikia.testassignment.homework.pages.WikiaFilePage;
+import pl.nith.wikia.testassignment.homework.pages.WikiaFlashElementPage;
 import pl.nith.wikia.testassignment.homework.pages.WikiaHomeworkPage;
 
 import java.util.concurrent.TimeUnit;
@@ -16,9 +22,12 @@ public class AddVideoToHomeworkPageTest {
     private WikiaHomeworkPage wikiPage;
 
     @BeforeClass
-    @Parameters("baseUrl")
-    public void initDriver(String baseUrl) throws Exception {
-        driver = new ChromeDriver();
+    @Parameters({"baseUrl", "useChrome"})
+    public void initDriver(String baseUrl, String useChrome) throws Exception {
+        if (useChrome.equals("true"))
+            driver = new ChromeDriver();
+        else
+            driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(baseUrl);
         wikiPage = new WikiaHomeworkPage(driver);
@@ -40,6 +49,27 @@ public class AddVideoToHomeworkPageTest {
     @Test(groups = {"addVideo"})
     public void testUserLoggedIn() {
         // Check if the user is logged on
-        Assert.assertEquals(wikiPage.getSignInLableAttribute("data-id"), "userpage");
+        assertEquals(wikiPage.getSignInLableAttribute("data-id"), "userpage");
     }
+
+    @Test(groups = {"addVideo"})
+    public void testVisibilityOfContributeDropdown() {
+        wikiPage.clickContributeButton();
+        assertTrue(wikiPage.getContributeDropdownVisibility());
+    }
+
+    @Test(groups = {"addVideo"})
+    @Parameters({"addVideoUrl", "videoUrl", "videoTitle"})
+    public void testAddVideoLink(String addVideoUrl, String videoUrl, String videoTitle) {
+        WikiaAddVideoPage addVideoPage = wikiPage.clickAddVideoLink();
+        assertEquals(addVideoPage.getCurrentUrl(), addVideoUrl);
+
+        WikiaFlashElementPage flashElementPage = addVideoPage.inputVideoUrl(videoUrl).submitVideo();
+        assertEquals(flashElementPage.getMessage(), "Video page File:".concat(videoTitle).concat(" was successfully added."));
+
+        WikiaFilePage filePage = flashElementPage.clickOnFlashLinkByTitle(videoTitle);
+        assertEquals(filePage.getCurrentUrl(), "http://qm-homework.wikia.com/wiki/File:".concat(WebElementHelper.convertSpacesToUnderscores(videoTitle)));
+    }
+
+
 }
