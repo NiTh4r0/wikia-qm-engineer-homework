@@ -1,0 +1,18 @@
+﻿<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="LoginToHomeworkPageSuite" parallel="false">
+	<parameter name="baseUrl" value="http://qm-homework.wikia.com/wiki/QM_HomeWork_Wikia" />
+	<parameter name="username" value="${QM_WIKIA_HOMEWORK_USERNAME}" />
+	<parameter name="password" value="${QM_WIKIA_HOMEWORK_PASSWORD}" />
+	<test name="LoginToHomeworkPage" preserve-order="true">
+        <classes>
+            <class name="LoginToHomeworkPageTest">
+                <methods>
+                    <include name="testCorrectPage" />
+                    <include name="testUserLoggedOut" />
+                    <include name="testVisibilityOfDropdownLogin" />
+                    <include name="testUserLoggedIn" />
+                </methods>
+            </class>
+        </classes>
+	</test>
+</suite>
