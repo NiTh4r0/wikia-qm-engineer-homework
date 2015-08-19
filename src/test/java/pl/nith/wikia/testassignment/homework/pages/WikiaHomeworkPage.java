@@ -7,12 +7,12 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pl.nith.wikia.testassignment.homework.helpers.WebElementHelper;
 
 /**
  * Created by NiTh4r0 on 2015-08-18.
  */
-public class WikiaHomeworkPage {
-    private WebDriver driver;
+public class WikiaHomeworkPage extends WikiaBasePage {
     private WebElement AccountNavigation;
     private WebElement UserLoginDropdown;
     private WebElement searchInput;
@@ -22,22 +22,24 @@ public class WikiaHomeworkPage {
     private WebElement loginButton;
     @FindBy(how = How.CLASS_NAME, using = "ajaxLogin")
     private WebElement singInLabel;
+    @FindBy(how = How.CLASS_NAME, using = "contribute")
+    private WebElement contributeDropdown;
+    @FindBy(how = How.CLASS_NAME, using = "WikiaMenuElement")
+    private WebElement WikiaMenuElement;
+    private WebElement addVideoLink;
 
     public WikiaHomeworkPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
     }
 
     public boolean getLoginDropdownVisibility() {
         return UserLoginDropdown.isDisplayed();
     }
+    public boolean getContributeDropdownVisibility() { return WikiaMenuElement.isDisplayed(); }
 
     public WikiaHomeworkPage moveMouseToLoginDropdown() {
-        Actions mouse = new Actions(driver);
+        Actions mouse = new Actions(getDriver());
         mouse.moveToElement(AccountNavigation).build().perform();
 
         waitForElement(UserLoginDropdown);
@@ -69,10 +71,23 @@ public class WikiaHomeworkPage {
         return singInLabel.getAttribute(attrName);
     }
 
-    private void waitForElement(WebElement element) {
-        if (!element.isDisplayed()) {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.visibilityOf(element));
-        }
+    public WikiaHomeworkPage clickContributeButton() {
+        contributeDropdown.click();
+
+        return this;
+    }
+
+    public WikiaAddVideoPage clickAddVideoLink() throws NullPointerException {
+        waitForElement(WikiaMenuElement);
+
+        addVideoLink = WebElementHelper.findLinkElementByHref(getDriver(), "WikiaVideoAdd");
+
+        if (addVideoLink != null)
+            addVideoLink.click();
+        else throw new NullPointerException();
+
+        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("wpWikiaVideoAddUrl")));
+
+        return new WikiaAddVideoPage(getDriver());
     }
 }

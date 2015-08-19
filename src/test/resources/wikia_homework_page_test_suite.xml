@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="WikiaHomeworkPageSuite" parallel="false">
+    <parameter name="useChrome" value="false" />
 	<parameter name="baseUrl" value="http://qm-homework.wikia.com/wiki/QM_HomeWork_Wikia" />
 	<parameter name="username" value="robert.zietek" />
 	<parameter name="password" value="88_pass_4_wikia" />
@@ -16,10 +17,15 @@
         </classes>
 	</test>
     <test name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest" preserve-order="true">
+        <parameter name="addVideoUrl" value="http://qm-homework.wikia.com/wiki/Special:WikiaVideoAdd" />
+        <parameter name="videoUrl" value="https://www.youtube.com/watch?v=h9tRIZyTXTI" />
+        <parameter name="videoTitle" value="The Best Classical Music In The World" />
         <classes>
             <class name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest">
                 <methods>
                     <include name="testUserLoggedIn" />
+                    <include name="testVisibilityOfContributeDropdown" />
+                    <include name="testAddVideoLink" />
                 </methods>
             </class>
         </classes>
