@@ -1,0 +1,27 @@
+﻿<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="WikiaHomeworkPageSuite" parallel="false">
+	<parameter name="baseUrl" value="http://qm-homework.wikia.com/wiki/QM_HomeWork_Wikia" />
+	<parameter name="username" value="${QM_WIKIA_HOMEWORK_USERNAME}" />
+	<parameter name="password" value="${QM_WIKIA_HOMEWORK_PASSWORD}" />
+	<test name="LoginToHomeworkPage" preserve-order="true">
+        <classes>
+            <class name="pl.nith.wikia.testassignment.homework.tests.LoginToHomeworkPageTest">
+                <methods>
+                    <include name="testCorrectPage" />
+                    <include name="testUserLoggedOut" />
+                    <include name="testVisibilityOfDropdownLogin" />
+                    <include name="testUserLoggedIn" />
+                </methods>
+            </class>
+        </classes>
+	</test>
+    <test name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest" preserve-order="true">
+        <classes>
+            <class name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest">
+                <methods>
+                    <include name="" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
