@@ -30,5 +30,9 @@ test {
         suites 'src/test/resources/wikia_homework_page_test_suite.xml'
     }
 
-    systemProperty 'webdriver.chrome.driver', System.getenv("webdriver.chrome.driver")
+    systemProperty 'webdriver.chrome.driver', System.getenv("webdriver_chrome_driver")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
 }
