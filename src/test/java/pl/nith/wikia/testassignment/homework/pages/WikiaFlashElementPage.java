@@ -18,27 +18,30 @@ import pl.nith.wikia.testassignment.homework.helpers.WebElementHelper;
 public class WikiaFlashElementPage extends WikiaBasePage {
 
   @FindBy(how = How.CLASS_NAME, using = "msg")
-    private WebElement message;
+  private WebElement message;
 
-    public WikiaFlashElementPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+  public WikiaFlashElementPage(WebDriver driver) {
+    super(driver);
+    PageFactory.initElements(driver, this);
+  }
+
+  public WikiaFilePage clickOnFlashLinkByTitle(String title) throws NullPointerException {
+    WebElement flashLink = WebElementHelper.findLinkElementByHref(getDriver(),
+        WebElementHelper.convertSpacesToUnderscores(title));
+
+    if (flashLink != null) {
+      flashLink.click();
+    } else {
+      throw new NullPointerException();
     }
 
-    public WikiaFilePage clickOnFlashLinkByTitle(String title) throws NullPointerException {
-      WebElement flashLink = WebElementHelper.findLinkElementByHref(getDriver(),
-          WebElementHelper.convertSpacesToUnderscores(title));
+    new WebDriverWait(getDriver(), Duration.of(10, ChronoUnit.SECONDS)).until(
+        ExpectedConditions.presenceOfElementLocated(By.id("WikiaMainContentContainer")));
 
-        if (flashLink != null)
-            flashLink.click();
-        else throw new NullPointerException();
+    return new WikiaFilePage(getDriver());
+  }
 
-        new WebDriverWait(getDriver(), Duration.of(10, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.id("WikiaMainContentContainer")));
-
-        return new WikiaFilePage(getDriver());
-    }
-
-    public String getMessage() {
-        return message.getText();
-    }
+  public String getMessage() {
+    return message.getText();
+  }
 }

@@ -10,24 +10,25 @@ import org.openqa.selenium.support.PageFactory;
  * Created by NiTh4r0 on 2015-08-19.
  */
 public class WikiaAddVideoPage extends WikiaBasePage {
-    private WebElement wpWikiaVideoAddUrl;
-    @FindBy(how = How.XPATH, using = "//input[@value='Add']")
-    private WebElement submitButton;
 
-    public WikiaAddVideoPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
+  private WebElement wpWikiaVideoAddUrl;
+  @FindBy(how = How.XPATH, using = "//input[@value='Add']")
+  private WebElement submitButton;
 
-    public WikiaAddVideoPage inputVideoUrl(String url) {
-        wpWikiaVideoAddUrl.sendKeys(url);
+  public WikiaAddVideoPage(WebDriver driver) {
+    super(driver);
+    PageFactory.initElements(driver, this);
+  }
 
-        return this;
-    }
+  public WikiaAddVideoPage inputVideoUrl(String url) {
+    wpWikiaVideoAddUrl.sendKeys(url);
 
-    public WikiaFlashElementPage submitVideo() {
-        submitButton.click();
+    return this;
+  }
 
-        return new WikiaFlashElementPage(getDriver());
-    }
+  public WikiaFlashElementPage submitVideo() {
+    submitButton.click();
+
+    return new WikiaFlashElementPage(getDriver());
+  }
 }
