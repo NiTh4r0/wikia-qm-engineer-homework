@@ -6,7 +6,13 @@
   <parameter name="baseUrl" value="http://qm-homework.wikia.com/wiki/QM_HomeWork_Wikia"/>
   <parameter name="username" value="${QM_WIKIA_HOMEWORK_USERNAME}"/>
   <parameter name="password" value="${QM_WIKIA_HOMEWORK_PASSWORD}"/>
+
   <test name="LoginToHomeworkPage">
+    <groups>
+      <run>
+        <include name="login"/>
+      </run>
+    </groups>
     <classes>
       <class name="pl.nith.wikia.testassignment.homework.tests.LoginToHomeworkPageTest">
         <methods>
@@ -18,7 +24,16 @@
       </class>
     </classes>
   </test>
-  <test name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest">
+
+  <test name="AddVideoToHomeworkPageTest">
+    <parameter name="videoUrl" value="https://www.youtube.com/watch?v=h9tRIZyTXTI"/>
+    <parameter name="videoTitle" value="The Best Classical Music In The World"/>
+    <parameter name="addVideoUrl" value="http://qm-homework.wikia.com/wiki/Special:WikiaVideoAdd"/>
+    <groups>
+      <run>
+        <include name="addVideo"/>
+      </run>
+    </groups>
     <classes>
       <class name="pl.nith.wikia.testassignment.homework.tests.AddVideoToHomeworkPageTest">
         <methods>
@@ -28,8 +43,5 @@
         </methods>
       </class>
     </classes>
-    <parameter name="videoUrl" value="https://www.youtube.com/watch?v=h9tRIZyTXTI"/>
-    <parameter name="videoTitle" value="The Best Classical Music In The World"/>
-    <parameter name="addVideoUrl" value="http://qm-homework.wikia.com/wiki/Special:WikiaVideoAdd"/>
   </test>
 </suite>
