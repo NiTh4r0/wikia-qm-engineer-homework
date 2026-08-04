@@ -26,6 +26,6 @@ public class WebElementHelper {
     }
 
     public static String convertSpacesToUnderscores(String str) {
-        return str.replaceAll(" ", "_");
+        return str.replace(" ", "_");
     }
 }

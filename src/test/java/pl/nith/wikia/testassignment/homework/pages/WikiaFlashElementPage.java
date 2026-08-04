@@ -1,5 +1,7 @@
 package pl.nith.wikia.testassignment.homework.pages;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,8 +16,8 @@ import pl.nith.wikia.testassignment.homework.helpers.WebElementHelper;
  * Created by NiTh4r0 on 2015-08-19.
  */
 public class WikiaFlashElementPage extends WikiaBasePage {
-    private WebElement flashLink;
-    @FindBy(how = How.CLASS_NAME, using = "msg")
+
+  @FindBy(how = How.CLASS_NAME, using = "msg")
     private WebElement message;
 
     public WikiaFlashElementPage(WebDriver driver) {
@@ -24,14 +26,14 @@ public class WikiaFlashElementPage extends WikiaBasePage {
     }
 
     public WikiaFilePage clickOnFlashLinkByTitle(String title) throws NullPointerException {
-        flashLink = WebElementHelper.findLinkElementByHref(getDriver(),
-                WebElementHelper.convertSpacesToUnderscores(title));
+      WebElement flashLink = WebElementHelper.findLinkElementByHref(getDriver(),
+          WebElementHelper.convertSpacesToUnderscores(title));
 
         if (flashLink != null)
             flashLink.click();
         else throw new NullPointerException();
 
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("WikiaMainContentContainer")));
+        new WebDriverWait(getDriver(), Duration.of(10, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.id("WikiaMainContentContainer")));
 
         return new WikiaFilePage(getDriver());
     }

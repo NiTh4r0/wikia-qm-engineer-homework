@@ -1,5 +1,7 @@
 package pl.nith.wikia.testassignment.homework.tests;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,7 +25,7 @@ public class LoginToHomeworkPageTest {
             driver = new ChromeDriver();
         else
             driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.of(10, ChronoUnit.SECONDS));
         driver.get(baseUrl);
         wikiPage = new WikiaHomeworkPage(driver);
     }

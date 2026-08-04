@@ -1,5 +1,7 @@
 package pl.nith.wikia.testassignment.homework.pages;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -71,10 +73,8 @@ public class WikiaHomeworkPage extends WikiaBasePage {
         return singInLabel.getAttribute(attrName);
     }
 
-    public WikiaHomeworkPage clickContributeButton() {
+    public void clickContributeButton() {
         contributeDropdown.click();
-
-        return this;
     }
 
     public WikiaAddVideoPage clickAddVideoLink() throws NullPointerException {
@@ -86,7 +86,7 @@ public class WikiaHomeworkPage extends WikiaBasePage {
             addVideoLink.click();
         else throw new NullPointerException();
 
-        new WebDriverWait(getDriver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.id("wpWikiaVideoAddUrl")));
+        new WebDriverWait(getDriver(), Duration.of(10, ChronoUnit.SECONDS)).until(ExpectedConditions.presenceOfElementLocated(By.id("wpWikiaVideoAddUrl")));
 
         return new WikiaAddVideoPage(getDriver());
     }
